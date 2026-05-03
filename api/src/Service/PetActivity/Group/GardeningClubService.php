@@ -178,7 +178,7 @@ class GardeningClubService
                 'Toadstool', 'Egg', 'Dandelion', 'Tea Leaves',
             ];
 
-        $totalCrops = max(1, $contributedSkill / self::TotalCropSkillDivisor);
+        $totalCrops = max(1, (int)ceil($contributedSkill / self::TotalCropSkillDivisor));
 
         $products = [];
 
