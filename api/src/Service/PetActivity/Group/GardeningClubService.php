@@ -359,7 +359,7 @@ class GardeningClubService
         $total =
             max($petWithSkills->getStrength()->getTotal(), $petWithSkills->getStamina()->getTotal()) +
             $petWithSkills->getNature()->getTotal() +
-            ($pet->hasMerit(MeritEnum::GREEN_THUMB) ? 4 : 0); // 5 as Green Thumb gives +1 Nature
+            ($pet->hasMerit(MeritEnum::GREEN_THUMB) ? 4 : 0) // 5 as Green Thumb gives +1 Nature
         ;
 
         return $this->rng->rngNextInt(1, 10 + $total);
