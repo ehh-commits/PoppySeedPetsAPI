@@ -295,16 +295,16 @@ class GardeningClubService
 
                 $extraItem = null;
 
-                if($this->rng->rngNextInt(1, 50) == 1)
-                {
-                    $extraItem = ItemRepository::findOneByName($this->em, $this->rng->rngNextFromArray($luckyRewards));
-                    $luckyMessage = ' They also found ' . $extraItem->getNameWithArticle() . '! (OMG!)';
-                }
-                else if($member->hasMerit(MeritEnum::LUCKY) && $this->rng->rngNextInt(1, 50) == 1)
+                if($member->hasMerit(MeritEnum::LUCKY) && $this->rng->rngNextInt(1, 50) == 1)
                 {
                     $lucky = true;
                     $extraItem = ItemRepository::findOneByName($this->em, $this->rng->rngNextFromArray($luckyRewards));
-                    $luckyMessage = ' They also found ' . $extraItem->getNameWithArticle() . '! (Lucky!~)';
+                    $luckyMessage = ' They also found ' . $extraItem->getNameWithArticle() . '! (Lucky~!)';
+                }
+                else if($this->rng->rngNextInt(1, 50) == 1)
+                {
+                    $extraItem = ItemRepository::findOneByName($this->em, $this->rng->rngNextFromArray($luckyRewards));
+                    $luckyMessage = ' They also found ' . $extraItem->getNameWithArticle() . '! (OMG!)';
                 }
 
                 $message = ActivityHelpers::PetName($member) . ' did some weeding with ' . $group->getName() . '. They managed to find ' . $item->getNameWithArticle() . ' while weeding!' . $luckyMessage;
@@ -321,7 +321,7 @@ class GardeningClubService
                 $this->inventoryService->petCollectsItem($item, $member, ActivityHelpers::PetName($member) . ' found this while weeding!', $activityLog);
 
                 if($extraItem)
-                    $this->inventoryService->petCollectsItem($extraItem, $member, ActivityHelpers::PetName($member) . ' found this while weeding!' . ($lucky ? '(Lucky!~)' : ''), $activityLog);
+                    $this->inventoryService->petCollectsItem($extraItem, $member, ActivityHelpers::PetName($member) . ' found this while weeding!' . ($lucky ? '(Lucky~!)' : ''), $activityLog);
 
             }
             else if($roll < 10)
@@ -388,14 +388,14 @@ class GardeningClubService
                 $double = false;
                 $lucky = false;
 
-                if($this->rng->rngNextInt(1, 25) == 1)
-                    $double = true;
-                else if($member->hasMerit(MeritEnum::LUCKY) && $this->rng->rngNextInt(1, 25) == 1)
-                                {
+                if($member->hasMerit(MeritEnum::LUCKY) && $this->rng->rngNextInt(1, 25) == 1)
+                {
                     $double = true;
                     $lucky = true;
                     $activityLog->addTag(PetActivityLogTagHelpers::findOneByName($this->em, PetActivityLogTagEnum::Lucky));
                 }
+                else if($this->rng->rngNextInt(1, 25) == 1)
+                    $double = true;
 
                 $activityLog->addInterestingness($lucky ? PetActivityLogInterestingness::ActivityUsingMerit : PetActivityLogInterestingness::HoHum);
 
@@ -410,8 +410,8 @@ class GardeningClubService
 
                 if($double)
                 {
-                    $activityLog->appendEntry($member->getName() . ' made lots of extra ' . $fertilizer . ' and brought it home.' . ($lucky ? '(Lucky!~)' : ''));
-                    $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->GetName() . '!' . ($lucky ? '(Lucky!~)' : ''), $activityLog);
+                    $activityLog->appendEntry($member->getName() . ' made lots of extra ' . $fertilizer . ' and brought it home.' . ($lucky ? '(Lucky~!)' : ''));
+                    $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->GetName() . '!' . ($lucky ? '(Lucky~!)' : ''), $activityLog);
                 }
                 else
                     $activityLog->appendEntry($member->getName() . ' made some extra ' . $fertilizer . ' and brought it home.');
