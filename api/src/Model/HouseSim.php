@@ -168,7 +168,7 @@ class HouseSim implements IHouseSim
 
         foreach($inventoryToRemoveFromHouseSim as $itemToRemove)
         {
-            if($itemToRemove->getId())
+            if($itemToRemove->hasId())
                 $this->inventoryToRemoveFromDatabase[] = $itemToRemove;
         }
 
