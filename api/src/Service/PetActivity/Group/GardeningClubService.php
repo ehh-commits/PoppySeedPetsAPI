@@ -54,9 +54,9 @@ class GardeningClubService
             'Green', 'Pink', 'Red', 'Yellow', 'Orange', 'Rainbow', 'Purple', 'Indigo', 'Blue', 'Azure', 'White',
         ],
         'plants' => [
-            'Peonies', 'Agrimonies', 'Trefoils', 'Dandelions', 'Irises', 'Lotuses', 'Carnations', 'Merigolds',
-            'Flowers', 'Trees', 'Grasses', 'Blooms', 'Seeds', 'Sprouts', 'Roses', 'Daisies', 'Blossoms', 'Potatos',
-            'Tomatos', 'Reds', 'Beans', 'Wheat', 'Rice', 'Oranges', 'Eggplants', 'Corn', 'Yams', 'Carrots', 'Algae',
+            'Peonies', 'Agrimonies', 'Trefoils', 'Dandelions', 'Irises', 'Lotuses', 'Carnations', 'Marigolds',
+            'Flowers', 'Trees', 'Grasses', 'Blooms', 'Seeds', 'Sprouts', 'Roses', 'Daisies', 'Blossoms', 'Potatoes',
+            'Tomatoes', 'Reds', 'Beans', 'Wheat', 'Rice', 'Oranges', 'Eggplants', 'Corn', 'Yams', 'Carrots', 'Algae',
             'Mushrooms', 'Bushes', 'Cacao', 'Coconuts',
         ],
         'adjectives' => [
