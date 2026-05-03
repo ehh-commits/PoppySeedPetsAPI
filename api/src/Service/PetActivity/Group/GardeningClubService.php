@@ -410,11 +410,11 @@ class GardeningClubService
 
                 if($double)
                 {
-                    $activityLog->appendEntry($member->getName() . ' made lots of extra ' . $fertilizer . ' and brought it home.' . ($lucky ? ' (Lucky~!)' : ''));
+                    $activityLog->appendEntry($member->getName() . ' made two extra bags, and brought them home.' . ($lucky ? ' (Lucky~!)' : ''));
                     $this->inventoryService->petCollectsItem($fertilizer, $member, $member->getName() . ' made extra while making compost for ' . $group->getName() . '!' . ($lucky ? ' (Lucky~!)' : ''), $activityLog);
                 }
                 else
-                    $activityLog->appendEntry($member->getName() . ' made some extra ' . $fertilizer . ' and brought it home.');
+                    $activityLog->appendEntry($member->getName() . ' made an extra ' . $fertilizer . ', and brought it home.');
 
 
             }
