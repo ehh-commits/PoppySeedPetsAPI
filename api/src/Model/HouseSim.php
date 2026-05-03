@@ -133,7 +133,7 @@ class HouseSim implements IHouseSim
         else
             $this->itemQuantitiesByItemId[$itemId]--;
 
-        if($itemToRemove->getId())
+        if($itemToRemove->hasId())
             $this->inventoryToRemoveFromDatabase[] = $itemToRemove;
 
         $this->inventory = array_filter(
