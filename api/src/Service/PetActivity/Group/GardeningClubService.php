@@ -321,7 +321,7 @@ class GardeningClubService
                 $this->inventoryService->petCollectsItem($item, $member, ActivityHelpers::PetName($member) . ' found this while weeding!', $activityLog);
 
                 if($extraItem)
-                    $this->inventoryService->petCollectsItem($extraItem, $member, ActivityHelpers::PetName($member) . ' found this while weeding!' . ($lucky ? '(Lucky~!)' : ''), $activityLog);
+                    $this->inventoryService->petCollectsItem($extraItem, $member, ActivityHelpers::PetName($member) . ' found this while weeding!' . ($lucky ? ' (Lucky~!)' : ''), $activityLog);
 
             }
             else if($roll < 10)
@@ -410,8 +410,8 @@ class GardeningClubService
 
                 if($double)
                 {
-                    $activityLog->appendEntry($member->getName() . ' made lots of extra ' . $fertilizer . ' and brought it home.' . ($lucky ? '(Lucky~!)' : ''));
-                    $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->GetName() . '!' . ($lucky ? '(Lucky~!)' : ''), $activityLog);
+                    $activityLog->appendEntry($member->getName() . ' made lots of extra ' . $fertilizer . ' and brought it home.' . ($lucky ? ' (Lucky~!)' : ''));
+                    $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->GetName() . '!' . ($lucky ? ' (Lucky~!)' : ''), $activityLog);
                 }
                 else
                     $activityLog->appendEntry($member->getName() . ' made some extra ' . $fertilizer . ' and brought it home.');
