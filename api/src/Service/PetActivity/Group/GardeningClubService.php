@@ -214,7 +214,7 @@ class GardeningClubService
             ;
 
             foreach($products as $product)
-                $this->inventoryService->petCollectsItem($product, $member, $group->GetName() . ' grew this!', $activityLog);
+                $this->inventoryService->petCollectsItem($product, $member, $group->getName() . ' grew this!', $activityLog);
 
 
             $activityLogsPerPet[$member->getId()] = $activityLog;
@@ -406,12 +406,12 @@ class GardeningClubService
                 else if($roll >= 15)
                     $fertilizer = 'Bag of Fertilizer';
 
-                $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->GetName() . '!', $activityLog);
+                $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->getName() . '!', $activityLog);
 
                 if($double)
                 {
                     $activityLog->appendEntry($member->getName() . ' made lots of extra ' . $fertilizer . ' and brought it home.' . ($lucky ? ' (Lucky~!)' : ''));
-                    $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->GetName() . '!' . ($lucky ? ' (Lucky~!)' : ''), $activityLog);
+                    $this->inventoryService->petCollectsItem($fertilizer, $member, ActivityHelpers::PetName($member) . ' made extra while making compost for ' . $group->getName() . '!' . ($lucky ? ' (Lucky~!)' : ''), $activityLog);
                 }
                 else
                     $activityLog->appendEntry($member->getName() . ' made some extra ' . $fertilizer . ' and brought it home.');
