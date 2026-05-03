@@ -119,7 +119,7 @@ class HouseSim implements IHouseSim
 
         $rng->rngNextShuffle($items);
 
-        /** @var Inventory|null $itemToRemove */
+        /** @var Inventory $itemToRemove */
         $itemToRemove = array_find(
             $this->inventory,
             fn(Inventory $i) => in_array($i->getItem()->getName(), $items)
