@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace App\Controller\Pet;
 
 use App\Enum\SerializationGroupEnum;
-use App\Exceptions\PSPFormValidationException;
 use App\Service\ResponseService;
 use App\Service\Typeahead\PetTypeaheadService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,14 +39,7 @@ class TypeaheadController
 
         if($request->query->has('speciesId'))
         {
-            try
-            {
-                $petTypeaheadService->setSpeciesId(Ulid::fromString($request->query->getString('speciesId')));
-            }
-            catch(\InvalidArgumentException $e)
-            {
-                throw new PSPFormValidationException('Invalid species ID.');
-            }
+            $petTypeaheadService->setSpeciesId(Ulid::fromString($request->query->getString('speciesId')));
         }
 
         $suggestions = $petTypeaheadService->search('name', $request->query->getString('search'));

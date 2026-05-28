@@ -54,14 +54,7 @@ class TransmigrationSerumController
         if($speciesIdRaw === '')
             throw new PSPInvalidOperationException('A species to transmigrate to was not selected.');
 
-        try
-        {
-            $speciesId = Ulid::fromString($speciesIdRaw);
-        }
-        catch(\InvalidArgumentException $e)
-        {
-            throw new PSPFormValidationException('The selected species doesn\'t exist?? Try reloading and trying again.');
-        }
+        $speciesId = Ulid::fromString($speciesIdRaw);
 
         if($speciesId->equals($pet->getSpecies()->getId()))
             throw new PSPInvalidOperationException('That\'s ' . $pet->getName() . '\'s current species! No sense in wasting the serum!');

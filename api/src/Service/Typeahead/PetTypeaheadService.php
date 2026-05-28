@@ -15,6 +15,7 @@ namespace App\Service\Typeahead;
 
 use App\Entity\Pet;
 use App\Entity\User;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Uid\Ulid;
@@ -48,7 +49,7 @@ class PetTypeaheadService extends TypeaheadService
             $qb->andWhere('e.owner=:owner')->setParameter('owner', $this->user);
 
         if($this->speciesId)
-            $qb->andWhere('e.species=:species')->setParameter('species', $this->speciesId);
+            $qb->andWhere('e.species=:species')->setParameter('species', $this->speciesId->toBinary(), ParameterType::BINARY);
 
         return $qb;
     }
