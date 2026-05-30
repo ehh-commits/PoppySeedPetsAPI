@@ -55,11 +55,12 @@ See `api/src/Service/CLAUDE.md` for ResponseService patterns, activity log creat
 
 PhpStan runs with a baseline (`api/phpstan-baseline.neon`). When you delete a file or refactor code so that previously-ignored errors disappear, the baseline must be updated in the same commit, or phpstan will fail:
 
-- Deleting a file: every `path: src/...` entry for the deleted file must be removed. Unused baseline entries are fatal.
+The two cases below earn a mention only because their *fix* isn't obvious — they are **not** a catalog of triggers to extend:
+
 - Reducing error occurrences: if the `count:` on a remaining entry is now too high (e.g., you deleted a method containing one of three `(int)$mixed` casts), decrement `count:` accordingly. PhpStan reports an "expected N times, occurred M times" error.
 - Changing a shaped-array return type: baseline messages for `return.type` errors embed the *full inferred array shape* (e.g. `but returns array{greenhouse: ..., fertilizer: ...}`). Adding/removing a key to the returned array changes that shape, so the baselined pattern no longer matches and phpstan fails with `ignore.unmatched`. Update the message to mirror the new shape (escaping `:` `{` `}` `|` `<` `>` as the existing entries do). When in doubt, run phpstan once, copy the new "but returns …" text from the reported error, and re-escape it.
 
-When in doubt after any refactor that touches code, grep `phpstan-baseline.neon` for the affected symbol/offset and reconcile every match — an unmatched ignore is itself a non-ignorable error.
+**Everything else follows one rule** — so don't grow the list above unless a case carries a genuinely new fix mechanic. Any change that makes a suppressed error vanish, multiply, or change shape will break its baseline entry, and a stale entry (an unmatched ignore, an orphaned `path:`, a wrong `count:`) is itself a non-ignorable error. After any refactor — including deleting a file — grep `phpstan-baseline.neon` for the affected file/symbol and reconcile every match: delete orphaned entries, fix counts.
 
 ### Serialization group strings live as literals
 
@@ -87,6 +88,7 @@ When migrating an entity's PK from auto-increment INT to `BINARY(16)` ULID (prec
 - **Doctrine infers BINARY(16) on the FK side automatically** from `ManyToOne(targetEntity: ...)`'s PK type. No `JoinColumn(type: ...)` change is needed on the dependent entities unless someone hand-wrote one (grep `JoinColumn.*<rel_name>` to confirm).
 - **`PDO::FETCH_FUNC` callback parameters in raw-SQL controllers (`SimpleDb::mapResults`)** receive the binary column as a 16-byte PHP string. Convert with `Ulid::fromBinary($raw)->toBase32()` for JSON responses. Don't wrap in `HEX(...)` SQL-side — the round-trip is dead weight.
 - **The default Symfony `UidNormalizer` serializes `Ulid` → base32 string** (e.g. `01HXAB...`, 26 chars) with no extra config.
+- **A `Ulid` bound into a DQL comparison silently matches nothing against a `BINARY(16)` column.** Doctrine binds the `Ulid` as its base32 *string*, which never equals the binary PK — the clause matches zero rows with no error (int PKs bind fine, so this only bites migrated entities). Bind the raw bytes instead: `->setParameter('species', $ulid->toBinary(), ParameterType::BINARY)` (see `PetTypeaheadService::addQueryBuilderConditions()`), and `array_map(fn($u) => $u->toBinary(), $ulids)` for an `IN (:ids)` array. This is why the old species-typeahead `e.id NOT IN (:ids)` exclusion failed; the fix collapsed the two-pass search into a single ranked query so no id is ever bound for exclusion at all — prefer designing the query so it can't return a row twice over excluding ids after the fact.
 
 ### ULID input parsing and PhpStan
 
