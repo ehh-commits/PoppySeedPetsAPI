@@ -361,13 +361,9 @@ class UmbraService implements IPetActivity
         {
             $useSpirit = $spiritCompanion !== null && $hasRelevantSpirit && (!$hasEideticMemory || $this->rng->rngNextBool());
 
-            if($useSpirit)
-            {
-                $messageDetail = ActivityHelpers::PetName($pet) . ' and ' . $spiritCompanion->getName() . ' were able to calm them down and point the way.';
-            }
-            else {
-                $messageDetail = ActivityHelpers::PetName($pet) . ' had already memorized the lay of the land, and after calming the three down pointed the way.';
-            }
+            $messageDetail = $useSpirit
+                ? ActivityHelpers::PetName($pet) . ' and ' . $spiritCompanion->getName() . ' were able to calm them down and point the way.'
+                : ActivityHelpers::PetName($pet) . ' had already memorized the lay of the land, and after calming the three down pointed the way.';
 
             $activityLog = PetActivityLogFactory::createUnreadLog($this->em, $pet, '%pet:' . $pet->getId() . '.name% met a swan, fish, and crab in the Umbra. They were arguing over which way to pull a cart, and getting nowhere. ' . $messageDetail . ' The three were very thankful, and insisted that ' . ActivityHelpers::PetName($pet) . ' take ' . $rewards[$reward] . ' ' . $reward . '.')
                 ->addTags(PetActivityLogTagHelpers::findByNames($this->em, [ 'The Umbra' ]))
