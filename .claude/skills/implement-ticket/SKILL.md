@@ -46,7 +46,10 @@ Add tests for non-trivial logic, invariants, and regressions — be judicious. 1
 
 ## Phase 5: Verify
 
-1. Final `dotnet build -o /tmp/build-check` and `dotnet test` pass.
+1. Check for errors or regressions using best available tools; some examples:
+   * .NET/C#: `dotnet build`, `dotnet test`
+   * TS: `npx tsc`
+   * PHP: `php vendor/bin/phpstan analyze`, `php vendor/bin/phpunit`,  `php -l`
 2. Walk **Acceptance Criteria** item by item — each is unambiguously pass/fail by code inspection or test. If any fails, fix before moving on.
 3. Walk **Test Plan** item by item where you can; where you can't, ask user. Don't claim done on UI/feature work without exercising it.
 4. If any Acceptance Criteria or Test Plan item can't be verified (e.g., requires hardware, external account), say so explicitly — don't claim success.
